@@ -1,13 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package webcrawler;
 
 /**
  *
- * @author pradeep
+ * @author pradeep kumar
  */
 
 import java.util.*;
@@ -89,11 +85,7 @@ public class WebCrawler {
             haveUrl() ;
         }
         else
-        {/*
-            System.out.print("Enter g/google or b/bing or y/yahoo : ");
-            String st = sc.next() ;
-            st = st.toLowerCase() ;
-            */
+        {
             if( ch.equals("g") || ch.equals("google") )
             {
                 GoogleSearch() ;
@@ -142,13 +134,7 @@ public class WebCrawler {
         System.out.println("** Done ");                //end of program.
     }
     
-    
-    
-    
-    
-    
-    
-    
+ 
     
     public static void haveUrl() throws Exception
     {
@@ -157,14 +143,8 @@ public class WebCrawler {
         initUrl = sc.next();
         
         
-        
-        
         start() ;
     }
-    
-    
-    
-    
     
     
     
@@ -197,12 +177,7 @@ public class WebCrawler {
         outputInfo() ;     
     }
     
-    
-    
-    
-    
-    
-    
+   
     
     
     
@@ -259,11 +234,6 @@ public class WebCrawler {
         
     }
         
-        
-    
-
-    
-    
     
 
 
@@ -322,12 +292,6 @@ public class WebCrawler {
     
     
     
-    
-    
-    
-    
-    
-    
     public static void GoogleSearch() throws IOException
     {
         googleSearchClass gs = new googleSearchClass() ;
@@ -335,20 +299,14 @@ public class WebCrawler {
         try
         {
             initUrl = gs.search() ;
-            //System.out.println("Url : "+initUrl);
             
             start() ;
         }
         catch(Exception e)
         {
             e.printStackTrace();
-            //System.out.println("Cannot search google. error : "+e);
         }
     }
-    
-    
-    
-    
     
     
     
@@ -359,27 +317,20 @@ public class WebCrawler {
         try
         {
             initUrl = bs.search() ;
-            //System.out.println("Url : "+initUrl);
-            
             start() ;
         }
         catch(Exception e)
         {
             e.printStackTrace();
-            //System.out.println("Cannot search google. error : "+e);
         }
     }
-    
-    
-    
-    
     
     
     
     public static void YahooSearch() throws IOException
     {
         //yahooSearchClass ys = new yahooSearchClass() ;
-        
+        //****************** yahoo search api has been depricated .
         try
         {
             //initUrl = ys.search() ;
@@ -393,9 +344,6 @@ public class WebCrawler {
             //System.out.println("Cannot search google. error : "+e);
         }
     }
-    
-    
-    
     
     public static void ImageSearch() throws IOException
     {
@@ -454,10 +402,6 @@ public class WebCrawler {
     
     
     
-    
-    
-    
-    
     private static boolean isImageUrl(String url)
     {
         if( url.contains("http://") || url.contains("www.") || url.contains("https://") || ! url.contains(".pdf") )
@@ -468,13 +412,6 @@ public class WebCrawler {
         
         return false;
     }
-    
-    
-    
-    
-    
-    
-    
     
     
     
@@ -495,14 +432,6 @@ public class WebCrawler {
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
     private static boolean crawler() throws Exception
     {
         boolean flag = false ;
@@ -514,10 +443,7 @@ public class WebCrawler {
                 marked.add(i, Boolean.TRUE);
                 flag = true ;
                 
-                //if( choice == 1 )
                     processUrl(urlArr.get(i));
-                /*if( choice == 2 )
-                    downloadImages(urlArr.get(i));*/
             }
         }
         
@@ -528,14 +454,6 @@ public class WebCrawler {
         
         return false;
     }
-    
-    
-    
-    
-                                        /*
-                                         * crawl url's on given page..
-                                        */
-    
     
     
     
@@ -559,12 +477,6 @@ public class WebCrawler {
             System.out.println("Crawling : "+ url);
         }
         
-        /*
-        if( searchText != null )
-        if( ! url.equals(initUrl) && ! matchText( url.toLowerCase() ) )
-        {
-            return ;
-        }*/
         
         if( url.startsWith("https://") )
         {
@@ -593,18 +505,11 @@ public class WebCrawler {
         
         Response response ;
         
-        //System.out.println("Crawling : "+ url);
-        
         Document doc ;
         
         try
         {
-            //doc = Jsoup.connect(url).get();//getting java.net.SocketTimeoutException: connect timed out
-            //doc = Jsoup.connect(url).timeout(0).userAgent("Mozilla").get(); //done...worked fine
-            
-            //using response to get status codes
             response = Jsoup.connect(url).timeout(0).userAgent("Mozilla").execute() ;
-            //throw new org.jsoup.HttpStatusException("thrown", 400, url) ;
         }
         catch(org.jsoup.HttpStatusException ex)
         {
@@ -633,21 +538,7 @@ public class WebCrawler {
         
         //full web-page html code
         String text = doc.html();
-        //System.out.println(text);
         
-        /* // this worked fine.
-        if(text.toLowerCase().contains("director"))
-            System.out.println("  -->contains director");
-        */
-        /*  //this doesn't worked ,all n were null
-        for( Node n : doc.body().childNodes() )
-        {
-            if( n instanceof TextNode )
-            {
-                System.out.println("    --> "+n.toString());
-            }
-        }
-        */
         if( url == initUrl )
             System.out.println("....connected.... Parsing further.");
         
@@ -672,35 +563,12 @@ public class WebCrawler {
     }
     
     
-    
-    
-    
-    
     public static void httpsConn(String url) throws Exception
     {
-        //System.out.println("Crawling : "+ url);
-        /*
-        SSLContext ctx = SSLContext.getInstance("TLS") ;
-        ctx.init(null, new TrustManager[] { new TrustManager() }, null);
-        SSLContext.setDefault(ctx);
-        
-        HttpsURLConnection conn = (HttpsURLConnection) new URL(url).openConnection() ;
-        conn.setHostnameVerifier(new HostVerifier() ) ;
-        conn.setRequestMethod("GET") ;
-        conn.connect() ;
-        
-        System.out.println("      Response: " + conn.getResponseCode());
-        */
         URL link = new URL(url) ;
         URLConnection uc = link.openConnection() ;
         
-        /*
-        File tmp = File.createTempFile("html","");     //creating temperory file
-        //FileInputStream fin = new FileInputStream(tmp) ;    //read or write bytes
-        //FileOutputStream fout = new FileOutputStream(tmp) ;
         
-        FileWriter fw = new FileWriter(tmp) ;
-        */
         //get html page
         InputStreamReader inr = new InputStreamReader(uc.getInputStream()) ;
         BufferedReader in = new BufferedReader(inr) ;
@@ -709,8 +577,7 @@ public class WebCrawler {
         
         while( ( input = in.readLine() ) != null )
         {
-            //fw.append(input+"\n") ;
-            //System.out.println(input);
+          
             if( input.contains("<a href=\"") )
             {
                 extractUrl(input , url) ;
@@ -718,18 +585,6 @@ public class WebCrawler {
         }
         in.close();
         
-        //fw.close();
-        /*
-        System.out.println("Page : ");
-        
-        BufferedReader inp = new BufferedReader(new FileReader(tmp) ) ;
-        String str;
-        while( ( str = inp.readLine() ) != null )
-        {
-            //System.out.println(str);
-        }
-        inp.close();
-        */
     }
     
     
@@ -888,144 +743,6 @@ public class WebCrawler {
     }
     
     
-    
-                                        /*
-                                         * crawl on all url's and download images ...
-                                        */
-    
-    
-    
-    
-    
-    
-    private static void downloadImages(String url) throws Exception
-    {
-        //validate link
-        if( ! isUrl(url) )
-            return;
-        
-        if( url.endsWith("/") )
-            url = url.substring(0,url.length()-1) ;
-        
-        if( url.contains("https://"))
-        {
-            httpsConn(url) ;
-            return;
-        }
-        
-        
-        URLEncoder.encode(url,"UTF-8");
-        
-        Response response = null;
-        
-        Document doc = null;
-        
-        try
-        {
-            //using response to get status codes
-            response = Jsoup.connect(url).timeout(0).userAgent("Mozilla").execute() ;
-        }
-        catch(org.jsoup.HttpStatusException ex)
-        {
-            System.out.println(url+" excep : "+ex);
-            return;
-        }
-        catch(Exception e)
-        {
-            System.out.println(url+" excep : "+e);
-            return;
-        }
-        
-        if( response.statusCode() != 200 )
-        {
-            System.out.println("Status : "+ url+" : "+response.statusCode());
-            return;
-        }
-        
-        System.out.println("Crawling : "+ url);
-        
-        //parse
-        doc = response.parse();
-        
-        Elements imageLinks = doc.getElementsByTag("img");
-        
-        for( Element img : imageLinks )
-        {
-            String imageLink = img.absUrl("src");
-            
-            if( isImageUrl(imageLink) )
-            {
-                if( imageLink.endsWith("/") )
-                    imageLink = imageLink.substring(0,imageLink.length()-1);
-                
-                //getting name of image
-                int index = imageLink.lastIndexOf("/");
-                String imageName = imageLink.substring(index);
-                index = imageName.lastIndexOf(".");
-                imageName = imageName.substring(0,index);
-                
-                //downloading image
-                URL imgL = new URL(imageLink);
-                
-                //check if already downloaded then skip
-                if( downloadedImages.contains(imageLink) )
-                {
-                    continue;
-                }
-                else
-                {
-                    downloadedImages.add(imageLink);
-                }
-                
-                ReadableByteChannel rbc = Channels.newChannel(imgL.openStream()) ;
-                
-                //create new dir
-                File dir = new File("/home/pradeep/prog/java/Swing/"+ (initUrl.replace("http://","")).replace("https://", "").replaceAll("/", "-").concat(".Images") ) ;
-                //if dir DNE , create
-                if( ! dir.exists() )
-                {
-                    try
-                    {
-                        dir.mkdir();
-                    }
-                    catch(Exception e)
-                    {
-                        System.out.println("Directory Cannot be created");
-                        throw e;
-                    }
-                }
-                
-                File f = new File(dir+"/"+imageName.replaceAll("/", ""));
-                
-                storageFile = dir;
-                
-                FileOutputStream fos = new FileOutputStream(f);
-                
-                fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
-                
-                System.out.println("Downloaded "+imageName);
-            }
-        }
-        
-        
-              // check for all urls in page
-        Elements query = doc.select("a[href]");
-        
-        for( Element link : query)
-        {
-            String urlStr = link.attr("abs:href");
-            if( urlStr.endsWith("/") )
-                urlStr = urlStr.substring(0,urlStr.length()-1);
-            
-            if( isUrl(urlStr) )
-            if( ! urlArr.contains(urlStr) && ! urlArr.contains( urlStr+"/") )
-            {
-                urlArr.add(urlStr);
-                marked.add(Boolean.FALSE);
-                len++;
-                
-            }
-        }
         
     }
     
@@ -1076,17 +793,6 @@ public class WebCrawler {
         }
     }
     
-    
-    
-    
-    private static void printUrl()
-    {
-        System.out.println("Urls found are :\n");
-        
-        for(int i=0;i<len;i++)
-        {
-            System.out.println(urlArr.get(i));
-        }
-    }
+   
     
 }
