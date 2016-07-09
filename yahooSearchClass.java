@@ -32,15 +32,7 @@ public class yahooSearchClass {
         System.out.print("Enter String to search: ");
         
         String search = sc.nextLine() ;
-        /*
-        // using yahoo boss : javaboss for searching
-        WebSearch ws = new WebSearch() ;
         
-        ws.search(search) ;
-        
-        //get list
-        List<WebSearchResult> results = ws.getResults() ;
-        */
         if( count == 0 )
         {
             System.out.println("\nNo result found.\nExiting.....");
