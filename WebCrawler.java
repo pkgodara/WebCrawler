@@ -103,7 +103,8 @@ public class WebCrawler {
             else
             if( ch.equals("i") || ch.equals("gi") || ch.equals("images") || ch.equals("googleimages") )
             {
-                ImageSearch() ;
+              //currently unavailable
+                //ImageSearch() ;
             }
             else
             {
@@ -344,7 +345,7 @@ public class WebCrawler {
             //System.out.println("Cannot search google. error : "+e);
         }
     }
-    
+    /*
     public static void ImageSearch() throws IOException
     {
         googleImagesSearch gis = new googleImagesSearch() ;
@@ -362,7 +363,7 @@ public class WebCrawler {
             e.printStackTrace();
         }
     }
-    
+    */
     
     
     
