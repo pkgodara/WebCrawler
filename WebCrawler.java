@@ -33,17 +33,6 @@ import java.awt.Desktop;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 
-//ssl connection
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.SSLSession;
-import javax.net.ssl.X509TrustManager;
-import javax.net.ssl.X509TrustManager.*;
-
-import javax.security.cert.X509Certificate;
-import javax.security.cert.CertificateException;
 
 
 public class WebCrawler {
@@ -98,11 +87,13 @@ public class WebCrawler {
             else
             if( ch.equals("ya") || ch.equals("yahoo") )
             {
-                YahooSearch() ;
+              GoogleSearch() ;
+                //YahooSearch() ;
             }
             else
             if( ch.equals("i") || ch.equals("gi") || ch.equals("images") || ch.equals("googleimages") )
             {
+              GoogleSearch() ;
               //currently unavailable
                 //ImageSearch() ;
             }
