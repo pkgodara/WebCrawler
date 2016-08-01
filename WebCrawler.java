@@ -34,6 +34,9 @@ import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 public class WebCrawler {
     
@@ -44,6 +47,7 @@ public class WebCrawler {
     
     static ArrayList<String> downloadedImages ;     //storing urls of downloaded images
     static ArrayList<String> imageSearch ;          //storing urls of image search results
+    static ArrayList<String> contactEmails ;
     
     static String initUrl , searchText ;
     
@@ -176,16 +180,16 @@ public class WebCrawler {
     public static void outputInfo() throws Exception
     {
         
-        System.out.println("Enter 1 to get all links , 2 to download all images , 3 to open page.");
+        System.out.println("Enter 1 to get all links , 2 to download all images , 3 to open page In browser , 4 to get all Emails ");
         choice = sc.nextInt() ;
         
-        if( choice > 3 || choice < 1 )
+        if( choice > 4 || choice < 1 )
         {
             System.out.println("Invalid Entry. Default 1");
             choice = 1;
         }
         
-        if( choice == 1 )
+        if( choice == 1 || choice == 4 )
         {
             System.out.print("Store links in file : y/yes or n/no  ");
             String cstr = sc.next() ;
@@ -197,8 +201,12 @@ public class WebCrawler {
             }
         }
         
+        if( choice == 4 )
+        {
+            contactEmails = new ArrayList<>() ;
+        }
         
-        if( choice == 1 || choice == 2 )
+        if( choice != 3 )
         {
             System.out.print("Get urls with specific text : y/yes  ");
             String cstr = sc.next() ;
@@ -222,8 +230,6 @@ public class WebCrawler {
             System.out.println("Opening Page In Browser........... ");
             openInBrowser(initUrl) ;
         }
-        
-        
     }
         
     
@@ -527,6 +533,28 @@ public class WebCrawler {
         //parse
         doc = response.parse();
         
+        if( choice == 4 )      //get all emails.
+        {
+            Matcher matches = Pattern.compile("[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+").matcher(doc.toString()) ;
+            
+            int count = 0 ;
+            
+            while( matches.find() )
+            {
+                String email = matches.group() ;
+                
+                if( ! contactEmails.contains(email) )
+                {
+                    System.out.println("\tEmail : "+ email);
+                    
+                    contactEmails.add(email) ;
+                    count++ ;
+                }
+            }
+            
+            if( count > 0 )
+            System.out.println("\t"+count+" emails found on this page.");
+        }
         
         //full web-page html code
         String text = doc.html();
